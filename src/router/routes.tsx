@@ -1,18 +1,42 @@
-import { lazy } from 'react'
+import { lazy } from "react"
 
-// 动态引入，只有使用的时候引入这两个页面
-const Login: React.FC = lazy(() => import('@/pages/login'))
-const Home: React.FC = lazy(() => import('@/pages/home'))
+const Login = lazy(() => import("@/pages/login"))
+const Home = lazy(() => import("@/pages/App"))
+const Scratchpad = lazy(() => import("@/pages/scratchpad"))
+const Notes = lazy(() => import("@/pages/notes"))
+const Favorites = lazy(() => import("@/pages/favorites"))
+const Trash = lazy(() => import("@/pages/trash"))
 
 const routes = [
   {
-    path: '/login',
-    element: <Login />
+    path: "/login",
+    element: <Login />,
   },
   {
-    path: '/',
-    element: <Home />
-  }
+    element: <Home />,
+    children: [
+      {
+        path: "/",
+        element: <Scratchpad />,
+      },
+      {
+        path: "/notes",
+        element: <Notes />,
+      },
+      {
+        path: "/favorites",
+        element: <Favorites />,
+      },
+      {
+        path: "/trash",
+        element: <Trash />,
+      },
+      {
+        path: "*",
+        element: <div>404 not Found</div>,
+      },
+    ],
+  },
 ]
 
 export default routes

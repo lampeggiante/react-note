@@ -1,5 +1,5 @@
 const Login: React.FC = () => {
-  return <div>登录页</div>
+  return <>登录页</>
 }
 
 export default Login
