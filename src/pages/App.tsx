@@ -1,5 +1,8 @@
 import { Suspense } from "react"
 import { Outlet, NavLink } from "react-router-dom"
+
+import { FileAddOutlined, EditOutlined, DatabaseOutlined, BookOutlined, DeleteOutlined } from "@ant-design/icons"
+
 import "../styles/App.scss"
 
 const Home: React.FC = () => {
@@ -8,25 +11,32 @@ const Home: React.FC = () => {
       <aside>
         <div className="empty-aside"></div>
         <div className="aside-container">
-          <button className="main-btn">+新笔记</button>
+          <div className="btn-container">
+            <FileAddOutlined />
+            <div className="btn-font">新笔记</div>
+          </div>
           <div className="menu-item">
             <NavLink to="/" end>
-              便笺
+              <EditOutlined />
+              <span className="menu-font">便笺</span>
             </NavLink>
           </div>
           <div className="menu-item">
             <NavLink to="/notes" end>
-              笔记
+              <DatabaseOutlined />
+              <span className="menu-font">笔记</span>
             </NavLink>
           </div>
           <div className="menu-item">
             <NavLink to="/favorites" end>
-              收藏
+              <BookOutlined />
+              <span className="menu-font">收藏</span>
             </NavLink>
           </div>
           <div className="menu-item">
             <NavLink to="/trash" end>
-              回收站
+              <DeleteOutlined />
+              <span className="menu-font">回收站</span>
             </NavLink>
           </div>
         </div>
