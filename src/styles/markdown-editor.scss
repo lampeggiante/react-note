@@ -1,0 +1,21 @@
+.mde-container {
+  background: #fff;
+  border: 1px solid #e1e1e1;
+  .mde-body {
+    display: flex;
+    flex-direction: row;
+    min-height: 65vh;
+    .mde-edit {
+      border:none;
+      outline: none;
+      resize: none;
+      flex: 1;
+      padding: 24px 12px;
+    }
+    #content {
+      padding: 0 12px;
+      flex: 1;
+      border-left: 1px solid #e1e1e1;
+    }
+  }
+}

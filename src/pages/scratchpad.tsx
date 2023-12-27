@@ -1,5 +1,7 @@
+import MarkdownEditor from "@/components/markdown-editor"
+
 const Scratchpad: React.FC = () => {
-  return <>便笺</>
+  return <MarkdownEditor />
 }
 
 export default Scratchpad
