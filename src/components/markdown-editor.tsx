@@ -1,4 +1,4 @@
-import { useState, useRef } from "react"
+import { useState, useRef, useEffect } from "react"
 
 import "../styles/alice.css" // 引入github的markdown主题样式
 import "../styles/markdown-editor.scss"
@@ -6,9 +6,12 @@ import "highlight.js/styles/github.css"
 
 import hljs from "highlight.js"
 import markdownIt from "markdown-it"
+import MarkdownItTaskCheckbox from "markdown-it-task-lists"
+
+import NavBar from "./toolBar"
 
 const md = new markdownIt({
-  // 设置代码高亮的配置
+  break: true,
   highlight: (code: string, language: string) => {
     if (language && hljs.getLanguage(language)) {
       try {
@@ -22,17 +25,29 @@ const md = new markdownIt({
 
     return '<pre class="hljs"><code>' + md.utils.escapeHtml(code) + "</code></pre>"
   },
+}).use(MarkdownItTaskCheckbox, {
+  // 任务列表插件
+  disabled: true,
+  divWrap: false,
+  divClass: "checkbox",
+  idPrefix: "cbx_",
+  ulClass: "task-list",
+  liClass: "task-list-item",
 })
 
 let scrolling: 0 | 1 | 2 = 0
 let scrollTimer: ReturnType<typeof setTimeout>
 
-const MarkdownEditor = () => {
+const MarkdownEditor: React.FC = () => {
   const [htmlString, setHtmlString] = useState("")
+  const [value, setValue] = useState("")
   const editRef = useRef<HTMLTextAreaElement>(null)
   const showRef = useRef<HTMLDivElement>(null)
 
-  const parse = (text: string) => setHtmlString(md.render(text))
+  const handleEditChange = (val: string) => {
+    setValue(val)
+    setHtmlString(md.render(val))
+  }
 
   const handleScroll = (block: number, event: any) => {
     const { scrollHeight, scrollTop, clientHeight } = event.target
@@ -63,15 +78,20 @@ const MarkdownEditor = () => {
     }, 200)
   }
 
+  useEffect(() => {
+    handleEditChange(value)
+  }, [value])
+
   return (
     <div className="mde-container">
-      <div className="mde-toolbar"></div>
+      <NavBar value={value} setValue={setValue} editElement={editRef} />
       <div className="mde-body">
         <textarea
           className="mde-edit"
-          onChange={(e) => parse(e.target.value)}
+          onChange={(e) => setValue(e.target.value)}
           ref={editRef}
           onScroll={(e) => handleScroll(1, e)}
+          value={value}
         />
         <div
           ref={showRef}
