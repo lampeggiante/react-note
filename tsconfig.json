@@ -5,7 +5,7 @@
     "lib": ["ESNext", "DOM", "DOM.Iterable"],
     "module": "ESNext",
     "skipLibCheck": true, // 跳过 .d .ts 文件的类型检查
-    "baseUrl": ".", // 查询的基本路径
+    "baseUrl": "./", // 查询的基本路径
     "paths": { "@/*": ["src/*"] }, // 路径映射，配合别名使用
 
     /* Bundler mode */
