@@ -7,8 +7,9 @@ import "highlight.js/styles/github.css"
 import hljs from "highlight.js"
 import markdownIt from "markdown-it"
 import MarkdownItTaskCheckbox from "markdown-it-task-lists"
+import PropTypes from "prop-types"
 
-import NavBar from "./toolBar"
+import ToolBar from "./toolBar"
 
 const md = new markdownIt({
   break: true,
@@ -38,16 +39,15 @@ const md = new markdownIt({
 let scrolling: 0 | 1 | 2 = 0
 let scrollTimer: ReturnType<typeof setTimeout>
 
-const MarkdownEditor: React.FC = () => {
-  const [htmlString, setHtmlString] = useState("")
-  const [value, setValue] = useState("")
-  const editRef = useRef<HTMLTextAreaElement>(null)
-  const showRef = useRef<HTMLDivElement>(null)
+interface PropsType {
+  value: string
+  setValue: (val: string) => void
+}
 
-  const handleEditChange = (val: string) => {
-    setValue(val)
-    setHtmlString(md.render(val))
-  }
+const MarkdownEditor: React.FC<PropsType> = ({ value, setValue }) => {
+  const [htmlString, setHtmlString] = useState("")
+  const editRef = useRef<HTMLTextAreaElement | null>(null)
+  const showRef = useRef<HTMLDivElement | null>(null)
 
   const handleScroll = (block: number, event: any) => {
     const { scrollHeight, scrollTop, clientHeight } = event.target
@@ -79,12 +79,13 @@ const MarkdownEditor: React.FC = () => {
   }
 
   useEffect(() => {
-    handleEditChange(value)
-  }, [value])
+    setValue(value)
+    setHtmlString(md.render(value))
+  }, [setValue, value])
 
   return (
     <div className="mde-container">
-      <NavBar value={value} setValue={setValue} editElement={editRef} />
+      <ToolBar value={value} setValue={setValue} editElement={editRef} />
       <div className="mde-body">
         <textarea
           className="mde-edit"
@@ -103,6 +104,11 @@ const MarkdownEditor: React.FC = () => {
       </div>
     </div>
   )
+}
+
+MarkdownEditor.propTypes = {
+  value: PropTypes.string.isRequired,
+  setValue: PropTypes.func.isRequired,
 }
 
 export default MarkdownEditor

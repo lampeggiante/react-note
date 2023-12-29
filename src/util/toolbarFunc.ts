@@ -97,3 +97,23 @@ export const addPhoto = (el: HTMLTextAreaElement, setValue: (value: string) => v
   setSelectionRange(el, selectionStart, selectionEnd)
   setValue(newValue)
 }
+
+export const addCodeBlock = (
+  el: HTMLTextAreaElement,
+  setValue: (value: string) => void,
+  value: string,
+  language: string,
+) => {
+  const [start, end] = getCursorPosition(el)
+
+  const newValue =
+    start === end
+      ? `${value.slice(0, start)}\n\`\`\`${language}\n\n\`\`\`\n${value.slice(end)}`
+      : `${value.slice(0, start)}\n\`\`\`${language}\n${value.slice(start, end)}\n\`\`\`\n${value.slice(end)}`
+
+  const selectionStart = end + 5 + language.length
+  const selectionEnd = end + 5 + language.length
+
+  setSelectionRange(el, selectionStart, selectionEnd)
+  setValue(newValue)
+}

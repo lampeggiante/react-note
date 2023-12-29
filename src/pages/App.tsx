@@ -43,10 +43,7 @@ const Home: React.FC = () => {
       </aside>
       <section>
         <Suspense fallback={<div>Loading...</div>}>
-          <div className="title">标题</div>
-          <div className="cardContainer">
-            <Outlet />
-          </div>
+          <Outlet />
         </Suspense>
       </section>
     </div>

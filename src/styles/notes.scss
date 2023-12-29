@@ -1,0 +1,16 @@
+.note-container {
+  display: flex;
+  flex-direction: row;
+  height: 72vh;
+  .note-list {
+    flex: 1;
+    padding: 12px;
+  }
+  .note-content {
+    flex: 3;
+    height: 72vh;
+    overflow-y: auto;
+    border-left: 1px #1e1e1e solid;
+    background-color: #fdfdfd;
+  }
+}

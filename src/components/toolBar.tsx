@@ -9,13 +9,15 @@ import {
   LinkOutlined,
   TableOutlined,
   PictureOutlined,
-  LeftOutlined,
-  RightOutlined,
+  CodeOutlined,
+  UploadOutlined,
+  DownloadOutlined,
 } from "@ant-design/icons"
-import { Tooltip, Dropdown } from "antd"
+import { Tooltip, Dropdown, MenuProps } from "antd"
 import PropTypes from "prop-types"
 
-import { handleTwoSideSymbol, addList, addLink, addTable, addPhoto } from "@/util/toolbarFunc"
+import { CODELANGUAGE } from "@/const/var"
+import { handleTwoSideSymbol, addList, addLink, addTable, addPhoto, addCodeBlock } from "@/util/toolbarFunc"
 import "@/styles/toolbar.scss"
 
 interface PropsType {
@@ -24,8 +26,12 @@ interface PropsType {
   editElement: any
 }
 
-const NavBar: React.FC<PropsType> = (props) => {
+const ToolBar: React.FC<PropsType> = (props) => {
   const { value, setValue, editElement } = props
+  const items: MenuProps["items"] = [...CODELANGUAGE]
+  const onClick: MenuProps["onClick"] = ({ key }) => {
+    addCodeBlock(editElement.current, setValue, value, key)
+  }
   return (
     <nav>
       <Tooltip title="加粗">
@@ -79,19 +85,23 @@ const NavBar: React.FC<PropsType> = (props) => {
       <Tooltip title="图片">
         <PictureOutlined className="item" onClick={() => addPhoto(editElement.current, setValue, value)} />
       </Tooltip>
-      <Dropdown>
-        <span>
-          <LeftOutlined />/<RightOutlined />
-        </span>
+      <Dropdown menu={{ items, onClick }} overlayStyle={{ height: "30vh", overflow: "auto" }} placement="bottom">
+        <CodeOutlined />
       </Dropdown>
+      <Tooltip title="上传MarkDown">
+        <UploadOutlined onClick={() => {}} />
+      </Tooltip>
+      <Tooltip title="下载MarkDown">
+        <DownloadOutlined onClick={() => {}} />
+      </Tooltip>
     </nav>
   )
 }
 
-NavBar.propTypes = {
+ToolBar.propTypes = {
   value: PropTypes.string.isRequired,
   setValue: PropTypes.func.isRequired,
   editElement: PropTypes.element.isRequired,
 }
 
-export default NavBar
+export default ToolBar

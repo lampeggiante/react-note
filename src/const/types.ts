@@ -34,5 +34,5 @@ export interface HistoryLinkType {
 // 代码块语言
 export interface CodeBlockType {
   key: string
-  language: string
+  label: string
 }
