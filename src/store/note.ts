@@ -6,11 +6,14 @@ export interface NoteType {
   noteId: number | undefined
   noteTitle: string | undefined
   noteContent: string | undefined
+  isStar: boolean | undefined
+  isTrash: boolean | undefined
 }
 
 interface NoteState {
   latestNoteId: number
   noteArray: NoteType[]
+  updateLatestId: (params: number) => void
   addNote: (parmas: NoteType) => void
   editNote: (params: NoteType) => void
   delNote: (params: number) => void
@@ -25,13 +28,18 @@ const useNoteStore = create<NoteState>()(
           noteId: 0,
           noteTitle: "demo1",
           noteContent: "hello world",
+          isStar: false,
+          isTrash: false,
         },
         {
           noteId: 1,
           noteTitle: "demo2",
           noteContent: "hello world",
+          isStar: false,
+          isTrash: false,
         },
       ],
+      updateLatestId: (latestNoteId) => set({ latestNoteId }),
       addNote: (note: NoteType) => {
         set(
           produce((state) => {
@@ -42,9 +50,6 @@ const useNoteStore = create<NoteState>()(
       editNote: (note: NoteType) => {
         set(
           produce((state) => {
-            // state.noteArray.forEach((n: NoteType, index: number, array: NoteType[]) => {
-            //   if (n.noteId === note.noteId) array[index] = note
-            // })
             for (let i = 0; i < state.noteArray.length; i++) {
               if (state.noteArray[i].noteId === note.noteId) {
                 state.noteArray[i] = note
@@ -55,11 +60,13 @@ const useNoteStore = create<NoteState>()(
       },
       delNote: (id: number) => {
         set(
-          produce((state) =>
-            state.noteArray.map((n: NoteType) => {
-              if (n.noteId === id) return
-            }),
-          ),
+          produce((state) => {
+            for (let i = 0; i < state.noteArray.length; i++) {
+              if (state.noteArray[i].noteId === id) {
+                state.noteArray.splice(i, 1)
+              }
+            }
+          }),
         )
       },
     }),

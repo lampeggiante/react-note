@@ -1,4 +1,13 @@
-.title {
+input.title {
+  box-sizing: border-box;
+  margin: 12px 36px 0;
+  font-family: sans-serif;
+  font-size: 32px;
+  font-weight: 600;
+  color: #232323;
+  width: 712px;
+}
+div.title {
   box-sizing: border-box;
   margin: 24px 36px 0;
   font-family: sans-serif;

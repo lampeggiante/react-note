@@ -15,6 +15,12 @@ const Scratchpad: React.FC = () => {
   const [content, setContent] = useState(latestNote?.noteContent)
 
   useEffect(() => {
+    setTitle(latestNote?.noteTitle)
+    setContent(latestNote?.noteContent)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [latestNoteId])
+
+  useEffect(() => {
     editNote({ ...latestNote, noteTitle: title, noteContent: content } as NoteType)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [title, content])

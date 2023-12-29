@@ -11,6 +11,8 @@ import PropTypes from "prop-types"
 
 import ToolBar from "./toolBar"
 
+import useNoteStore from "@/store/note"
+
 const md = new markdownIt({
   break: true,
   highlight: (code: string, language: string) => {
@@ -45,6 +47,7 @@ interface PropsType {
 }
 
 const MarkdownEditor: React.FC<PropsType> = ({ value, setValue }) => {
+  const { latestNoteId } = useNoteStore()
   const [htmlString, setHtmlString] = useState("")
   const editRef = useRef<HTMLTextAreaElement | null>(null)
   const showRef = useRef<HTMLDivElement | null>(null)
@@ -79,13 +82,19 @@ const MarkdownEditor: React.FC<PropsType> = ({ value, setValue }) => {
   }
 
   useEffect(() => {
+    if (editRef.current) {
+      editRef.current.focus()
+    }
+  }, [latestNoteId])
+
+  useEffect(() => {
     setValue(value)
     setHtmlString(md.render(value))
   }, [setValue, value])
 
   return (
     <div className="mde-container">
-      <ToolBar value={value} setValue={setValue} editElement={editRef} />
+      <ToolBar value={value} setValue={setValue} editElement={editRef.current} />
       <div className="mde-body">
         <textarea
           className="mde-edit"

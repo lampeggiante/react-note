@@ -32,6 +32,8 @@
         background-color: #2d2d2d;
         color: #c1dffa;
         box-sizing: border-box;
+        cursor: pointer;
+        user-select: none;
       }
       .btn-container:hover {
         background-color: #3a3a3a;

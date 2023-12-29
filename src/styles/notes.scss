@@ -5,6 +5,8 @@
   .note-list {
     flex: 1;
     padding: 12px;
+    height: 72vh;
+    overflow-y: auto;
   }
   .note-content {
     flex: 3;

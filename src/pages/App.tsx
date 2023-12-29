@@ -1,17 +1,29 @@
-import { Suspense } from "react"
-import { Outlet, NavLink } from "react-router-dom"
+import { Suspense, useCallback } from "react"
+import { Outlet, NavLink, useNavigate } from "react-router-dom"
 
 import { FileAddOutlined, EditOutlined, DatabaseOutlined, BookOutlined, DeleteOutlined } from "@ant-design/icons"
 
-import "../styles/App.scss"
+import "@/styles/App.scss"
+import useNoteStore from "@/store/note"
+import { genNewNote } from "@/util/newNote"
 
 const Home: React.FC = () => {
+  const navigation = useNavigate()
+  // const location = useLocation()
+  const { addNote, updateLatestId } = useNoteStore()
+  const handleAddNewNote = useCallback(() => {
+    const newNote = genNewNote()
+    addNote(newNote)
+    updateLatestId(newNote.noteId as number)
+    navigation("/")
+  }, [addNote, navigation, updateLatestId])
+
   return (
     <div className="main">
       <aside>
         <div className="empty-aside"></div>
         <div className="aside-container">
-          <div className="btn-container">
+          <div className="btn-container" onClick={handleAddNewNote}>
             <FileAddOutlined />
             <div className="btn-font">新笔记</div>
           </div>

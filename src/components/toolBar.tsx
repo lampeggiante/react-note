@@ -30,60 +30,54 @@ const ToolBar: React.FC<PropsType> = (props) => {
   const { value, setValue, editElement } = props
   const items: MenuProps["items"] = [...CODELANGUAGE]
   const onClick: MenuProps["onClick"] = ({ key }) => {
-    addCodeBlock(editElement.current, setValue, value, key)
+    addCodeBlock(editElement, setValue, value, key)
   }
   return (
     <nav>
       <Tooltip title="加粗">
         <BoldOutlined
           className="item"
-          onClick={() => handleTwoSideSymbol(editElement.current, setValue, value, "**", "加粗字体")}
+          onClick={() => handleTwoSideSymbol(editElement, setValue, value, "**", "加粗字体")}
         />
       </Tooltip>
       <Tooltip title="斜体">
         <ItalicOutlined
           className="item"
-          onClick={() => handleTwoSideSymbol(editElement.current, setValue, value, "*", "倾斜字体")}
+          onClick={() => handleTwoSideSymbol(editElement, setValue, value, "*", "倾斜字体")}
         />
       </Tooltip>
       <Tooltip title="删除线">
         <StrikethroughOutlined
           className="item"
-          onClick={() => handleTwoSideSymbol(editElement.current, setValue, value, "~~", "删除文本")}
+          onClick={() => handleTwoSideSymbol(editElement, setValue, value, "~~", "删除文本")}
         />
       </Tooltip>
       <Tooltip title="有序列表">
-        <OrderedListOutlined
-          className="item"
-          onClick={() => addList(editElement.current, setValue, value, "1.", "有序列表")}
-        />
+        <OrderedListOutlined className="item" onClick={() => addList(editElement, setValue, value, "1.", "有序列表")} />
       </Tooltip>
       <Tooltip title="无序列表">
         <UnorderedListOutlined
           className="item"
-          onClick={() => addList(editElement.current, setValue, value, "-", "无序列表")}
+          onClick={() => addList(editElement, setValue, value, "-", "无序列表")}
         />
       </Tooltip>
       <Tooltip title="清单列表">
         <PlusSquareOutlined
           className="item"
-          onClick={() => addList(editElement.current, setValue, value, "- [ ]", "清单列表")}
+          onClick={() => addList(editElement, setValue, value, "- [ ]", "清单列表")}
         />
       </Tooltip>
       <Tooltip title="任务列表">
-        <CarryOutOutlined
-          className="item"
-          onClick={() => addList(editElement.current, setValue, value, "- [x]", "任务列表")}
-        />
+        <CarryOutOutlined className="item" onClick={() => addList(editElement, setValue, value, "- [x]", "任务列表")} />
       </Tooltip>
       <Tooltip title="超链接">
-        <LinkOutlined className="item" onClick={() => addLink(editElement.current, setValue, value)} />
+        <LinkOutlined className="item" onClick={() => addLink(editElement, setValue, value)} />
       </Tooltip>
       <Tooltip title="表格">
-        <TableOutlined className="item" onClick={() => addTable(editElement.current, setValue, value)} />
+        <TableOutlined className="item" onClick={() => addTable(editElement, setValue, value)} />
       </Tooltip>
       <Tooltip title="图片">
-        <PictureOutlined className="item" onClick={() => addPhoto(editElement.current, setValue, value)} />
+        <PictureOutlined className="item" onClick={() => addPhoto(editElement, setValue, value)} />
       </Tooltip>
       <Dropdown menu={{ items, onClick }} overlayStyle={{ height: "30vh", overflow: "auto" }} placement="bottom">
         <CodeOutlined />
@@ -101,7 +95,7 @@ const ToolBar: React.FC<PropsType> = (props) => {
 ToolBar.propTypes = {
   value: PropTypes.string.isRequired,
   setValue: PropTypes.func.isRequired,
-  editElement: PropTypes.element.isRequired,
+  editElement: PropTypes.any,
 }
 
 export default ToolBar
