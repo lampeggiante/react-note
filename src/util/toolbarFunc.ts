@@ -117,3 +117,7 @@ export const addCodeBlock = (
   setSelectionRange(el, selectionStart, selectionEnd)
   setValue(newValue)
 }
+
+export const hash = () => {
+  return Math.random().toString(36).slice(2)
+}

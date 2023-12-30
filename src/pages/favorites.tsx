@@ -41,7 +41,7 @@ const Favorites: React.FC = () => {
     <List
       className="note-list-container"
       itemLayout="horizontal"
-      dataSource={noteArray.filter((n) => n.isStar)}
+      dataSource={noteArray.filter((n) => n.isStar && !n.isTrash)}
       renderItem={(item) => (
         <List.Item
           actions={[
