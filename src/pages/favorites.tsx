@@ -29,7 +29,7 @@ const Favorites: React.FC = () => {
 
   const handleEdit: (id: number | undefined) => void = (id) => {
     updateLatestId(id as number)
-    navigator("/")
+    navigator("/react-note/")
   }
 
   const handleTrash: (id: number | undefined) => void = (id) => {

@@ -4,7 +4,7 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "deploy":"gh-pages -d dist -r https://github.com/YuXingLiang214/react-note.git -b gh-pages",
+    "deploy":"gh-pages -d dist -r https://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@github.com/YuXingLiang214/react-note.git -b gh-pages",
     "dev": "vite",
     "build": "tsc && vite build",
     "lint": "eslint src --fix --ext .ts,.tsx,.js,.jsx --max-warnings 0",

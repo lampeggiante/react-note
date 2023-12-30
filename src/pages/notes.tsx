@@ -29,7 +29,7 @@ const Notes: React.FC = () => {
 
   const handleEdit: (id: number | undefined) => void = (id) => {
     updateLatestId(id as number)
-    navigator("/")
+    navigator("/react-note/")
   }
 
   const handleStar: (id: number | undefined) => void = (id) => {

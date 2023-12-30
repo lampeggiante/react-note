@@ -16,19 +16,19 @@ const routes = [
     element: <Home />,
     children: [
       {
-        path: "/",
+        path: "/react-note/",
         element: <Scratchpad />,
       },
       {
-        path: "/notes",
+        path: "/react-note/notes",
         element: <Notes />,
       },
       {
-        path: "/favorites",
+        path: "/react-note/favorites",
         element: <Favorites />,
       },
       {
-        path: "/trash",
+        path: "/react-note/trash",
         element: <Trash />,
       },
       {

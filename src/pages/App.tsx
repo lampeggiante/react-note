@@ -15,7 +15,7 @@ const Home: React.FC = () => {
     const newNote = genNewNote()
     addNote(newNote)
     updateLatestId(newNote.noteId as number)
-    navigation("/")
+    navigation("/react-note/")
   }, [addNote, navigation, updateLatestId])
 
   return (
@@ -28,25 +28,25 @@ const Home: React.FC = () => {
             <div className="btn-font">新笔记</div>
           </div>
           <div className="menu-item">
-            <NavLink to="/" end>
+            <NavLink to="/react-note/" end>
               <EditOutlined />
               <span className="menu-font">便笺</span>
             </NavLink>
           </div>
           <div className="menu-item">
-            <NavLink to="/notes" end>
+            <NavLink to="/react-note/notes" end>
               <DatabaseOutlined />
               <span className="menu-font">笔记</span>
             </NavLink>
           </div>
           <div className="menu-item">
-            <NavLink to="/favorites" end>
+            <NavLink to="/react-note/favorites" end>
               <BookOutlined />
               <span className="menu-font">收藏</span>
             </NavLink>
           </div>
           <div className="menu-item">
-            <NavLink to="/trash" end>
+            <NavLink to="/react-note/trash" end>
               <DeleteOutlined />
               <span className="menu-font">回收站</span>
             </NavLink>
