@@ -4,8 +4,7 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "predeploy": "npm run build",
-    "deploy": "gh-pages -d dist",
+    "deploy":"gh-pages -d dist -r https://github.com/YuXingLiang214/react-note.git -b gh-pages",
     "dev": "vite",
     "build": "tsc && vite build",
     "lint": "eslint src --fix --ext .ts,.tsx,.js,.jsx --max-warnings 0",
@@ -58,5 +57,5 @@
       "prettier --write"
     ]
   },
-  "homepage": "https://yuxingliang214.github.io/react-note"
+  "homepage": "https://yuxingliang214.github.io/react-note/"
 }
