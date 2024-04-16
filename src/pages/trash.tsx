@@ -4,6 +4,7 @@ import { List, Skeleton } from "antd"
 
 import MarkdownViewer from "@/components/markdown-viewer"
 
+import { deleteNote, updateNoteInfo, updateNoteInfoParams } from "@/services/notes"
 import useNoteStore, { NoteType } from "@/store/note"
 
 import "@/styles/container.scss"
@@ -28,10 +29,12 @@ const Trash: React.FC = () => {
   const handleRecovery: (id: number | undefined) => void = (id) => {
     const clickedItem = noteArray.find((n) => n.noteId === id)
     editNote({ ...clickedItem, isTrash: false } as NoteType)
+    updateNoteInfo({ ...clickedItem, isTrash: false } as updateNoteInfoParams)
   }
 
   const handleDelete: (id: number | undefined) => void = (id) => {
     delNote(id as number)
+    deleteNote(id as number)
   }
 
   const divs = (

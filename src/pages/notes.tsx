@@ -5,13 +5,15 @@ import { List, Skeleton } from "antd"
 
 import MarkdownViewer from "@/components/markdown-viewer"
 
+import { updateLatestNote } from "@/services/login"
+import { updateNoteInfo, updateNoteInfoParams } from "@/services/notes"
 import useNoteStore, { NoteType } from "@/store/note"
 
 import "@/styles/container.scss"
 import "@/styles/notes.scss"
 
 const Notes: React.FC = () => {
-  const { noteArray, editNote, updateLatestId } = useNoteStore()
+  const { user_id, noteArray, editNote, updateLatestId } = useNoteStore()
   const [prevStr, setPrevStr] = useState("")
   const navigator = useNavigate()
   const truncateString = (str: string | undefined, maxLength: number) => {
@@ -29,17 +31,20 @@ const Notes: React.FC = () => {
 
   const handleEdit: (id: number | undefined) => void = (id) => {
     updateLatestId(id as number)
+    updateLatestNote({ user_id: user_id as number, latestNoteId: id as number })
     navigator("/react-note/")
   }
 
   const handleStar: (id: number | undefined) => void = (id) => {
     const clickedItem = noteArray.find((n) => n.noteId === id)
     editNote({ ...clickedItem, isStar: true } as NoteType)
+    updateNoteInfo({ ...clickedItem, isStar: true } as updateNoteInfoParams)
   }
 
   const handleTrash: (id: number | undefined) => void = (id) => {
     const clickedItem = noteArray.find((n) => n.noteId === id)
     editNote({ ...clickedItem, isTrash: true } as NoteType)
+    updateNoteInfo({ ...clickedItem, isTrash: true } as updateNoteInfoParams)
   }
 
   const divs = (

@@ -5,13 +5,15 @@ import { List, Skeleton } from "antd"
 
 import MarkdownViewer from "@/components/markdown-viewer"
 
+import { updateLatestNote } from "@/services/login"
+import { updateNoteInfo, updateNoteInfoParams } from "@/services/notes"
 import useNoteStore, { NoteType } from "@/store/note"
 
 import "@/styles/container.scss"
 import "@/styles/notes.scss"
 
 const Favorites: React.FC = () => {
-  const { noteArray, updateLatestId, editNote } = useNoteStore()
+  const { user_id, noteArray, updateLatestId, editNote } = useNoteStore()
   const [prevStr, setPrevStr] = useState("")
   const navigator = useNavigate()
   const truncateString = (str: string | undefined, maxLength: number) => {
@@ -29,12 +31,14 @@ const Favorites: React.FC = () => {
 
   const handleEdit: (id: number | undefined) => void = (id) => {
     updateLatestId(id as number)
+    updateLatestNote({ user_id: user_id as number, latestNoteId: id as number })
     navigator("/react-note/")
   }
 
   const handleTrash: (id: number | undefined) => void = (id) => {
     const clickedItem = noteArray.find((n) => n.noteId === id)
     editNote({ ...clickedItem, isTrash: true } as NoteType)
+    updateNoteInfo({ ...clickedItem, isTrash: true } as updateNoteInfoParams)
   }
 
   const divs = (

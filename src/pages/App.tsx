@@ -1,22 +1,60 @@
-import { Suspense, useCallback } from "react"
+import { Suspense, useCallback, useEffect, useState } from "react"
 import { Outlet, NavLink, useNavigate } from "react-router-dom"
 
-import { FileAddOutlined, EditOutlined, DatabaseOutlined, BookOutlined, DeleteOutlined } from "@ant-design/icons"
+import {
+  FileAddOutlined,
+  EditOutlined,
+  DatabaseOutlined,
+  BookOutlined,
+  DeleteOutlined,
+  LogoutOutlined,
+} from "@ant-design/icons"
+import { Spin, Popconfirm } from "antd"
 
 import "@/styles/App.scss"
-import useNoteStore from "@/store/note"
-import { genNewNote } from "@/util/newNote"
+import { updateLatestNote } from "@/services/login"
+import { addNewNote } from "@/services/notes"
+import useNoteStore, { NoteType } from "@/store/note"
 
 const Home: React.FC = () => {
   const navigation = useNavigate()
   // const location = useLocation()
-  const { addNote, updateLatestId } = useNoteStore()
-  const handleAddNewNote = useCallback(() => {
-    const newNote = genNewNote()
-    addNote(newNote)
-    updateLatestId(newNote.noteId as number)
+  const { user_id, addNote, updateLatestId } = useNoteStore()
+  const handleAddNewNote = useCallback(async () => {
+    const newNote: any = {
+      user_id,
+      noteTitle: "新建笔记",
+      noteContent: "",
+      isStar: false,
+      isTrash: false,
+    }
+    const res = await addNewNote(newNote)
+    const addedNote: NoteType = { ...newNote, noteId: res.data }
+    addNote(addedNote)
+    updateLatestId(res.data)
+    updateLatestNote({ user_id: user_id as number, latestNoteId: res.data })
     navigation("/react-note/")
-  }, [addNote, navigation, updateLatestId])
+  }, [addNote, navigation, updateLatestId, user_id])
+  const [pageSpin, setPageSpin] = useState<boolean>(true)
+
+  const handleExit = useCallback(() => {
+    localStorage.clear()
+    navigation("/react-note/login")
+  }, [navigation])
+
+  useEffect(() => {
+    setPageSpin(true)
+    const isLoggedIn = localStorage.getItem("token")
+    if (!isLoggedIn) {
+      navigation("/react-note/login")
+    }
+    setPageSpin(false)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
+  if (pageSpin) {
+    return <Spin spinning fullscreen />
+  }
 
   return (
     <div className="main">
@@ -51,10 +89,23 @@ const Home: React.FC = () => {
               <span className="menu-font">回收站</span>
             </NavLink>
           </div>
+          <div className="menu-item">
+            <Popconfirm
+              title="退出登录"
+              description="确定要退出吗"
+              onConfirm={handleExit}
+              okText="确认"
+              cancelText="取消">
+              <a href="#">
+                <LogoutOutlined />
+                <span style={{ marginLeft: 8 }}>退出登录</span>
+              </a>
+            </Popconfirm>
+          </div>
         </div>
       </aside>
       <section>
-        <Suspense fallback={<div>Loading...</div>}>
+        <Suspense fallback={<Spin delay={5000} fullscreen />}>
           <Outlet />
         </Suspense>
       </section>

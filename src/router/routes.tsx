@@ -1,6 +1,8 @@
 import { lazy } from "react"
 
 const Login = lazy(() => import("@/pages/login"))
+const Register = lazy(() => import("@/pages/register"))
+const Modify = lazy(() => import("@/pages/modify"))
 const Home = lazy(() => import("@/pages/App"))
 const Scratchpad = lazy(() => import("@/pages/scratchpad"))
 const Notes = lazy(() => import("@/pages/notes"))
@@ -9,8 +11,16 @@ const Trash = lazy(() => import("@/pages/trash"))
 
 const routes = [
   {
-    path: "/login",
+    path: "/react-note/login",
     element: <Login />,
+  },
+  {
+    path: "/react-note/register",
+    element: <Register />,
+  },
+  {
+    path: "/react-note/modify",
+    element: <Modify />,
   },
   {
     element: <Home />,
